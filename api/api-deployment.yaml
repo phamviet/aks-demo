@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: api-pvc
+      containers:
+        - name: api
+          image: strapi/strapi
+          volumeMounts:
+            - mountPath: "/usr/src/api/strapi-app"
+              name: volume
+          env:
+            - name: APP_NAME
+              value: strapi-app
+            - name: DATABASE_CLIENT
+              value: mysql
+            - name: DATABASE_HOST
+              value: db-mysql
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_NAME
+              value: strapi
+            - name: DATABASE_USERNAME
+              value: root
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-mysql
+                  key: mysql-root-password
+          ports:
+            - containerPort: 1337

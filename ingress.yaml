@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-ingress
+spec:
+  rules:
+    - host: aussie-demo.nashtechglobal.tech
+      http:
+        paths:
+          - path: /adminer
+            backend:
+              serviceName: adminer
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: api
+              servicePort: 80

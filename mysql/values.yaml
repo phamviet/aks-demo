@@ -1,0 +1,21 @@
+# https://github.com/helm/charts/blob/master/stable/mysql/values.yaml
+
+image: "mysql"
+imageTag: "5.7.14"
+
+### Create a database user
+###
+#mysqlUser: strapi
+#
+### Default: random 10 character string
+#mysqlPassword: strapi
+
+## Create a database
+##
+mysqlDatabase: strapi
+
+persistence:
+  enabled: true
+  existingClaim: "db-disk"
+  accessMode: ReadWriteOnce
+  size: 8Gi

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: http-echo
+          image: hashicorp/http-echo
+          args:
+            - "-text=Hello from Azure AKS"
+          ports:
+            - containerPort: 5678
